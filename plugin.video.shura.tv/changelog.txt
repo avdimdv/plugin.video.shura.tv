@@ -1,0 +1,4 @@
+[B]1.2.0[/B]
+-Kodi 17 support added
+[B]1.2.1[/B]
+-Kodi 17 support extended.
