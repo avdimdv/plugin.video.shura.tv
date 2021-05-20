@@ -21,6 +21,7 @@
 
 #import xbmcaddon, string, xbmc, xbmcgui, xbmcplugin, os
 import urllib2, re, string, xbmc, xbmcgui, xbmcplugin, os, urllib, cookielib, xbmcaddon
+#import web_pdb;
 
 addon = xbmcaddon.Addon(id='plugin.video.shura.tv')
 sys.path.append(os.path.join(addon.getAddonInfo('path'), 'resources', 'lib'))
@@ -201,6 +202,8 @@ def ProcessSettings(plugin, params):
 		xbmcplugin.endOfDirectory(handle,True,False)
 
 def Archive(plugin, feed, host, ArchiveOnly):
+	#web_pdb.set_trace()
+
 	item=xbmcgui.ListItem('', '', '', '')
 	weekepg = PLUGIN_CORE.getWeekEPG(host, feed)
 	arch = PLUGIN_CORE.getArchive(host, feed)
@@ -256,61 +259,25 @@ def Archive(plugin, feed, host, ArchiveOnly):
 	xbmcplugin.endOfDirectory(handle, cacheToDisc=False)
 	
 def OpenPage(plugin, num):
+	#web_pdb.set_trace()
+
 	Lgl = plugin.getLast()
 
 	playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
 	playlist.clear()
 	
 	counter = 0
-	AddOnlyOneFile = __settings__.getSetting('AddOnlyOneChannelToPlaylist')
-	if AddOnlyOneFile=='true':
+
+	AddOnlyOneFile = __settings__.getSetting('AddOnlyOneChannelToPlaylist') == 'true'
+	UseEpg = __settings__.getSetting('UseEpgInChannelsList') == 'true'
+
+	if AddOnlyOneFile:
 		i=num
 		thumb2 = gettbn(formating(Lgl[i]['name']))
 		item = xbmcgui.ListItem(Lgl[i]['name'], iconImage = thumb2, thumbnailImage = thumb2)
 		
-		
-		epg = PLUGIN_CORE.getLastEPG(Lgl[i]['url'], Lgl[i]['id'])
-		if epg==None or len(epg) <=0:
-			epg = PLUGIN_CORE.getCurrentEPG(Lgl[i]['url'], Lgl[i]['id'])
-		epg_start = 0
-		epg_end = 0
-		timerange = '-'
-		CurrentEPG=''
-		played = 0
-		try:
-			#epg = epg[0]
-			
-			if float(epg[0]['start_time']) + float(epg[0]['duration']) < float(time.time()) :
-				#xbmc.log('[SHURA.TV] current epg of channel ' + channel['id']+ ' must be refreshed')
-				epg = PLUGIN_CORE.getCurrentEPG(Lgl[i]['url'], Lgl[i]['id'])
-			
-			CurrentEPG = epg[0]['name'].encode('utf-8')
-
-			if "start_time" in epg[0]:
-				epg_start = datetime.datetime.fromtimestamp(epg[0]['start_time']).strftime('%H:%M')
-				if "duration" in epg[0]:
-					epg_end = datetime.datetime.fromtimestamp(epg[0]['start_time'] + epg[0]['duration']).strftime('%H:%M')
-				timerange = '%s - %s ' % (epg_start , epg_end)
-
-		except Exception, e:
-			xbmc.log('[SHURA.TV] exception i prepare EPG' + str(e))
-		label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name']+':', timerange + '-'+CurrentEPG.decode('utf-8') , '')
-		if epg <> None:
-			item.setInfo(type='video', infoLabels={'title': epg[0]['name'].encode('utf-8')})
-			item.setInfo(type='video', infoLabels={'plot': epg[0]['name'].encode('utf-8')})
-			item.setInfo(type='video', infoLabels={'StartTime': epg_start})
-			item.setInfo(type='video', infoLabels={'EndTime': epg_end})
-			item.setInfo(type='video', infoLabels={'duration': str(epg[0]['duration']/60)})
-			if len(epg) >1:
-				item.setInfo(type='video', infoLabels={'Studio': str(datetime.datetime.fromtimestamp(epg[1]['start_time']).strftime('%H:%M'))+'-'+str(datetime.datetime.fromtimestamp(epg[1]['start_time']+epg[1]['duration']).strftime('%H:%M'))+':'+epg[1]['name'].encode('utf-8')})
-		else:
-			item.setInfo(type="Video", infoLabels={"Title": Lgl[i]['name']})
-
-		playlist.add(url=Lgl[i]['url'], listitem=item)
-	else:
-		for i in range(num,len(Lgl)):
-			thumb2 = gettbn(formating(Lgl[i]['name']))
-			item = xbmcgui.ListItem(Lgl[i]['name'], iconImage = thumb2, thumbnailImage = thumb2)
+		epg = None
+		if UseEpg:
 			epg = PLUGIN_CORE.getLastEPG(Lgl[i]['url'], Lgl[i]['id'])
 			if epg==None or len(epg) <=0:
 				epg = PLUGIN_CORE.getCurrentEPG(Lgl[i]['url'], Lgl[i]['id'])
@@ -336,7 +303,51 @@ def OpenPage(plugin, num):
 
 			except Exception, e:
 				xbmc.log('[SHURA.TV] exception i prepare EPG' + str(e))
-			label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name']+':', timerange + '-'+CurrentEPG.decode('utf-8') , '')
+		label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name']+':', timerange + '-'+CurrentEPG.decode('utf-8') , '')
+		if epg <> None:
+			item.setInfo(type='video', infoLabels={'title': epg[0]['name'].encode('utf-8')})
+			item.setInfo(type='video', infoLabels={'plot': epg[0]['name'].encode('utf-8')})
+			item.setInfo(type='video', infoLabels={'StartTime': epg_start})
+			item.setInfo(type='video', infoLabels={'EndTime': epg_end})
+			item.setInfo(type='video', infoLabels={'duration': str(epg[0]['duration']/60)})
+			if len(epg) >1:
+				item.setInfo(type='video', infoLabels={'Studio': str(datetime.datetime.fromtimestamp(epg[1]['start_time']).strftime('%H:%M'))+'-'+str(datetime.datetime.fromtimestamp(epg[1]['start_time']+epg[1]['duration']).strftime('%H:%M'))+':'+epg[1]['name'].encode('utf-8')})
+		else:
+			item.setInfo(type="Video", infoLabels={"Title": Lgl[i]['name']})
+
+		playlist.add(url=Lgl[i]['url'], listitem=item)
+	else:
+		for i in range(num,len(Lgl)):
+			thumb2 = gettbn(formating(Lgl[i]['name']))
+			item = xbmcgui.ListItem(Lgl[i]['name'], iconImage = thumb2, thumbnailImage = thumb2)
+			epg = None
+			if UseEpg:
+				epg = PLUGIN_CORE.getLastEPG(Lgl[i]['url'], Lgl[i]['id'])
+				if epg==None or len(epg) <=0:
+					epg = PLUGIN_CORE.getCurrentEPG(Lgl[i]['url'], Lgl[i]['id'])
+				epg_start = 0
+				epg_end = 0
+				timerange = '-'
+				CurrentEPG=''
+				played = 0
+				try:
+					#epg = epg[0]
+					
+					if float(epg[0]['start_time']) + float(epg[0]['duration']) < float(time.time()) :
+						#xbmc.log('[SHURA.TV] current epg of channel ' + channel['id']+ ' must be refreshed')
+						epg = PLUGIN_CORE.getCurrentEPG(Lgl[i]['url'], Lgl[i]['id'])
+					
+					CurrentEPG = epg[0]['name'].encode('utf-8')
+
+					if "start_time" in epg[0]:
+						epg_start = datetime.datetime.fromtimestamp(epg[0]['start_time']).strftime('%H:%M')
+						if "duration" in epg[0]:
+							epg_end = datetime.datetime.fromtimestamp(epg[0]['start_time'] + epg[0]['duration']).strftime('%H:%M')
+						timerange = '%s - %s ' % (epg_start , epg_end)
+
+				except Exception, e:
+					xbmc.log('[SHURA.TV] exception i prepare EPG' + str(e))
+				label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name']+':', timerange + '-'+CurrentEPG.decode('utf-8') , '')
 			if epg <> None:
 				item.setInfo(type='video', infoLabels={'title': epg[0]['name'].encode('utf-8')})
 				item.setInfo(type='video', infoLabels={'plot': epg[0]['name'].encode('utf-8')})
@@ -354,30 +365,32 @@ def OpenPage(plugin, num):
 			
 			thumb2 = gettbn(formating(Lgl[i]['name']))
 			item = xbmcgui.ListItem(Lgl[i]['name'], iconImage = thumb2, thumbnailImage = thumb2)
-			epg = PLUGIN_CORE.getLastEPG(Lgl[i]['url'], Lgl[i]['id'])
-			if epg==None or len(epg) <=0:
-				epg = PLUGIN_CORE.getCurrentEPG(Lgl[i]['url'], Lgl[i]['id'])
-			epg_start = 0
-			epg_end = 0
-			timerange = '-'
-			CurrentEPG=''
-			played = 0
-			try:
-				#epg = epg[0]
-				
-				if float(epg[0]['start_time']) + float(epg[0]['duration']) < float(time.time()) :
+			epg = None
+			if UseEpg:
+				epg = PLUGIN_CORE.getLastEPG(Lgl[i]['url'], Lgl[i]['id'])
+				if epg==None or len(epg) <=0:
 					epg = PLUGIN_CORE.getCurrentEPG(Lgl[i]['url'], Lgl[i]['id'])
-				CurrentEPG = epg[0]['name'].encode('utf-8')
+				epg_start = 0
+				epg_end = 0
+				timerange = '-'
+				CurrentEPG=''
+				played = 0
+				try:
+					#epg = epg[0]
+					
+					if float(epg[0]['start_time']) + float(epg[0]['duration']) < float(time.time()) :
+						epg = PLUGIN_CORE.getCurrentEPG(Lgl[i]['url'], Lgl[i]['id'])
+					CurrentEPG = epg[0]['name'].encode('utf-8')
 
-				if "start_time" in epg[0]:
-					epg_start = datetime.datetime.fromtimestamp(epg[0]['start_time']).strftime('%H:%M')
-					if "duration" in epg[0]:
-						epg_end = datetime.datetime.fromtimestamp(epg[0]['start_time'] + epg[0]['duration']).strftime('%H:%M')
-					timerange = '%s - %s ' % (epg_start , epg_end)
+					if "start_time" in epg[0]:
+						epg_start = datetime.datetime.fromtimestamp(epg[0]['start_time']).strftime('%H:%M')
+						if "duration" in epg[0]:
+							epg_end = datetime.datetime.fromtimestamp(epg[0]['start_time'] + epg[0]['duration']).strftime('%H:%M')
+						timerange = '%s - %s ' % (epg_start , epg_end)
 
-			except Exception, e:
-				xbmc.log('[SHURA.TV] exception i prepare EPG' + str(e))
-			label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name']+':', timerange + '-'+CurrentEPG.decode('utf-8') , '')
+				except Exception, e:
+					xbmc.log('[SHURA.TV] exception i prepare EPG' + str(e))
+				label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name']+':', timerange + '-'+CurrentEPG.decode('utf-8') , '')
 			if epg <> None:
 				item.setInfo(type='video', infoLabels={'title': epg[0]['name'].encode('utf-8')})
 				item.setInfo(type='video', infoLabels={'plot': epg[0]['name'].encode('utf-8')})
@@ -394,6 +407,8 @@ def OpenPage(plugin, num):
 
 		
 def ShowChannelsList(plugin, mode = 'TV'):
+	#web_pdb.set_trace();
+	
 	refreshAlarmId = '%s_refresh_list' % PLUGIN_ID
 	xbmc.log('[SHURA.TV] before GetChannels')
 	channels = plugin.getLast()
@@ -404,6 +419,10 @@ def ShowChannelsList(plugin, mode = 'TV'):
 	xbmc.log('[SHURA.TV] ChannelCount='+str(total_items))
 	
 	xbmc.PlayList(xbmc.PLAYLIST_VIDEO).clear()
+
+	UseEpg = __settings__.getSetting('UseEpgInChannelsList') == 'true'
+	UseChannelsMapping = __settings__.getSetting('UseChannelsMapping') == 'true'
+	PrefixChannelName = __settings__.getSetting('PrefixChannelName') == 'true'
 
 	CHANNELMAPPING =''
 	channelsCountInFile=0
@@ -421,7 +440,7 @@ def ShowChannelsList(plugin, mode = 'TV'):
 			l = open(CHANNELMAPPING, 'rb')
 			while 1:
 				line = l.readline()
-				if not line:
+				if not line and UseChannelsMapping:
 					break
 				pass # do something
 				ch_id = line.split(':')[0]
@@ -429,13 +448,15 @@ def ShowChannelsList(plugin, mode = 'TV'):
 				channelsCountInFile = channelsCountInFile + 1
 				for channel in channels:
 					#xbmc.log('[SHURA.TV] Comparing with channel %s' %channel['id'])
-					if channel['id']==ch_id:
+					if channel['id']==ch_id or not UseChannelsMapping:
+						#web_pdb.set_trace();
 						#xbmc.log('[SHURA.TV] Match found for %s' %channel['id'])
 						epg=''
 						try:
-							epg = PLUGIN_CORE.getLastEPG(channel['url'], channel['id'])
-							if epg==None or len(epg) <=0:
-								epg = PLUGIN_CORE.getCurrentEPG(channel['url'], channel['id'])
+							if UseEpg:
+								epg = PLUGIN_CORE.getLastEPG(channel['url'], channel['id'])
+								if epg==None or len(epg) <=0:
+									epg = PLUGIN_CORE.getCurrentEPG(channel['url'], channel['id'])
 						except Exception, e:
 							xbmc.log('[SHURA.TV] Error loading epg for channel%s. Ignore the current epg' % e)
 						epg_start = 0
@@ -444,6 +465,7 @@ def ShowChannelsList(plugin, mode = 'TV'):
 						CurrentEPG=''
 						played = 0
 						Description =''
+						index=channels.index(channel)
 						#xbmc.log('[SHURA.TV] 1')
 						if epg <> None and len(epg) <> 0:
 							try:
@@ -475,9 +497,15 @@ def ShowChannelsList(plugin, mode = 'TV'):
 								xbmc.log('[SHURA.TV] exception in prepare EPG' + str(e))
 							archive_days=' Архив='.decode('utf-8')
 							archive_days= archive_days + str(int(channel['archive'])/24) +' дней'.decode('utf-8')
-							label = '%s[B] %s[/B] %s %s' % ('', channel['name']+':', timerange + '-'+CurrentEPG.decode('utf-8') + ', '+str(int(played)), '%,'+ archive_days)
+							channelName = channel['name']
+							if PrefixChannelName:
+								channelName = ' %d - %s' % (index+1, channelName)
+							label = '%s[B] %s[/B] %s %s' % ('', channelName+':', timerange + '-'+CurrentEPG.decode('utf-8') + ', '+str(int(played)), '%,'+ archive_days)
 						else:
-							label = '%s[B] %s[/B]' % ('', channel['name'])
+							channelName = channel['name']
+							if PrefixChannelName:
+								channelName = ' %d - %s' % (index+1, channelName)
+							label = '%s[B] %s[/B]' % ('', channelName)
 						iconimage=gettbn(formating(channel['name']))
 						item=xbmcgui.ListItem(channel['name'], iconImage = iconimage, thumbnailImage = iconimage)
 						item.setLabel(label)
@@ -500,7 +528,6 @@ def ShowChannelsList(plugin, mode = 'TV'):
 						popup.append((__language__(30021), 'Container.Refresh',))
 						
 						item.addContextMenuItems(popup, True)
-						index=channels.index(channel)
 						purl = sys.argv[0] + '?mode=OpenPage'\
 							+ '&num=' + urllib.quote_plus(str(index))
 							
@@ -508,7 +535,10 @@ def ShowChannelsList(plugin, mode = 'TV'):
 						#xbmc.log('[SHURA.TV] 3')
 						refresh_rate = int(__settings__.getSetting('autorefresh_rate'))
 						#xbmcplugin.setContent(handle, 'LiveTV')
-						break
+						if UseChannelsMapping:
+							break
+				if not UseChannelsMapping:		
+					break	# go out at the first loop as we add all channels at once
 			l.close()
 			xbmcplugin.setContent(handle, 'Movies')
 			xbmcplugin.endOfDirectory(handle, cacheToDisc=False)
@@ -517,7 +547,7 @@ def ShowChannelsList(plugin, mode = 'TV'):
 			#xbmc.log('[SHURA.TV] 4')
 	except Exception, e:
 		xbmc.log('[SHURA.TV] Error loading channel mapping %s' % e)
-	if channelsCountInFile < len(channels):
+	if UseChannelsMapping and channelsCountInFile < len(channels):
 		if os.path.isfile(CHANNELMAPPING):
 			xbmc.log('[SHURA.TV] Some channels are missing in mapping file, appending...')
 			for channel in channels:

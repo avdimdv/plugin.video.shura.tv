@@ -43,6 +43,9 @@
 	<string id="30041">Favourites only</string>
 	<string id="30042">All TV channels</string>
 	<string id="30043">Auto detect current timezone</string>
+	<string id="30044">Use EPG in channels list</string>
+	<string id="30045">Use channels mapping file</string>
+	<string id="30046">Add ordinal number to channel name</string>
 	<string id="31001">General settings</string>
 	<string id="31002">Channels list</string>
 	<string id="31003">Player</string>

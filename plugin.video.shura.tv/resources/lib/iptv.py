@@ -9,6 +9,10 @@ import re, os, sys
 from time import time
 from xml.dom.minidom import parseString
 import datetime
+import urlparse
+import os.path
+
+#import web_pdb;
 
 now = datetime.datetime.now()
 
@@ -143,6 +147,7 @@ class shura:
 				xbmc.log('[SHURA.TV] ERROR: %s' % message.encode('utf8'))
 	
 	def getLast(self):
+		#web_pdb.set_trace();
 		if self.last_list and 'ttl' in self.last_list:
 			if self.last_list['ttl'] <> now.strftime('%Y-%m-%d') or 'ott' not in self.last_list or self.last_list['ott']<>self.OTT or 'server' not in self.last_list or self.last_list['server']<>self.ServerName or 'streamType' not in self.last_list or self.last_list['streamType']<>self.StreamType:
 				xbmc.log('[SHURA.TV] Last list expired')
@@ -165,6 +170,8 @@ class shura:
 		return self.last_list['channels']
 	def getChannelsList(self):
 		
+		#web_pdb.set_trace();
+
 		url = 'http://pl.tvshka.net/?uid='+self.OTT +'&srv='+str(self.ServerName)+'&type=xml'
 		xbmc.log('requested url='+url)
 		
@@ -185,7 +192,7 @@ class shura:
 		for feed in dom.firstChild.childNodes:
 			id = name = url = archive = None
 			if feed.nodeName == 'feed': 
-				id = feed.getAttribute('id')
+				id = feed.getAttribute('id') # No longer have valid id, it is empty currently
 				name = feed.getElementsByTagName('name')[0].firstChild.wholeText
 				if self.StreamType == '1':
 					#xbmc.log('url type=HLS')
@@ -193,13 +200,17 @@ class shura:
 				else:
 					#xbmc.log('url type=Standard')
 					url = feed.getElementsByTagName('url')[0].firstChild.data
+				# Try get id from url. It is in format http://s1.tvshka.net/~shXXXXXXXX/701/ i.e. ends with number
+				path = urlparse.urlparse(url).path	# '/~shXXXXXXXX/701/'
+				path = os.path.split(path)[0]		# '/~shXXXXXXXX/701'
+				id = os.path.split(path)[1]			# 701
 				archive = feed.getElementsByTagName('archive')[0].firstChild.data
 				#xbmc.log('archive='+archive)
 				#self.getCurrentEPG(url, id)
 				res.append({ 
 					'id':		id,
 					'name':		name,
-					'url':	url,
+					'url':		url,
 					'archive':	archive
 					})
 
@@ -219,6 +230,7 @@ class shura:
 		return res
 		
 	def getCurrentEPG( self, HOST, FEED):
+		#web_pdb.set_trace();
 		host=HOST
 		feed=FEED
 		url = '%s%s/epg/pf.json' % (host.split('~')[0], feed)
@@ -257,6 +269,7 @@ class shura:
 		return resp2
 	
 	def getLastEPG(self, HOST, FEED):
+		#web_pdb.set_trace();
 		if len(self.last_epg)==0:
 			xbmc.log('[SHURA.TV] last epg empty')
 			if os.path.isfile(LASTEPGFILE):
@@ -273,6 +286,7 @@ class shura:
 		return self.last_epg[str(int(FEED))]
 
 	def getWeekEPG( self, HOST, FEED):
+		#web_pdb.set_trace();
 		host=HOST
 		feed=FEED
 		url = '%s%s/epg/week.json' % (host.split('~')[0], feed)

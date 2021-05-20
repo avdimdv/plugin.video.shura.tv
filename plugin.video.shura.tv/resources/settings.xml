@@ -9,6 +9,9 @@
 		<setting id="stream_type" type="enum" values="Standard|HLS" label="30029" default="Standard" />
 		<setting id="server" type="labelenum" values="UK|GER" label="30030" default="UK" />
 		<setting id="AddOnlyOneChannelToPlaylist" type="bool"  label="30031" default="false" />
+		<setting id="UseEpgInChannelsList" type="bool"  label="30044" default="true" />
+		<setting id="UseChannelsMapping" type="bool"  label="30045" default="true" />
+		<setting id="PrefixChannelName" type="bool"  label="30046" default="false" />
 	</category>
 	<category label="31003">
 		<setting id="SmallStepForward" type="enum" values="0|1|2|3|5|10|20|30|60" label="30032" default="1" />

@@ -44,6 +44,9 @@
 	<string id="30041">Избранные каналы</string>
 	<string id="30042">Все ТВ каналы</string>
 	<string id="30043">Определять временную зону автоматически</string>
+	<string id="30044">Use EPG in channels list</string>
+	<string id="30045">Use channels mapping file</string>
+	<string id="30046">Add ordinal number to channel name</string>
 	<string id="31001">Общие настройки</string>
 	<string id="31002">Список каналов</string>
 	<string id="34001">Сервер вещания</string>
