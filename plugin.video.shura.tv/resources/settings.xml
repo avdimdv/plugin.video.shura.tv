@@ -8,7 +8,7 @@
 		<setting id="always_refresh" type="bool" label="30028" default="true" />
 		<setting id="stream_type" type="enum" values="Standard|HLS" label="30029" default="Standard" />
 		<setting id="server" type="labelenum" values="UK|GER" label="30030" default="UK" />
-		<setting id="AddOnlyOneChannelToPlaylist" type="bool"  label="30031" default="false" />
+		<setting id="AddOnlyOneChannelToPlaylist" type="bool"  label="30031" default="true" />
 		<setting id="UseEpgInChannelsList" type="bool"  label="30044" default="true" />
 		<setting id="UseChannelsMapping" type="bool"  label="30045" default="true" />
 		<setting id="PrefixChannelName" type="bool"  label="30046" default="false" />

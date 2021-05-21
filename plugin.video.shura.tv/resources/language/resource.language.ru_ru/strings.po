@@ -1,0 +1,233 @@
+# Kodi Media Center language file
+# Addon Name: Shura.TV
+# Addon id: plugin.video.shura.tv
+# Addon Provider: XBMC Foundation
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "#30001"
+msgid "OTT"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Password"
+msgstr "Пароль"
+
+msgctxt "#30003"
+msgid "not received data"
+msgstr "not received data"
+
+msgctxt "#30004"
+msgid "Account settings"
+msgstr "Настройки учетной записи"
+
+msgctxt "#30005"
+msgid "Addon settings"
+msgstr "Настройки дополнения"
+
+msgctxt "#30006"
+msgid "Archive"
+msgstr "Архив"
+
+msgctxt "#30007"
+msgid "Go to previous day"
+msgstr "Перейти на предыдущий день"
+
+msgctxt "#30008"
+msgid "Go to next day"
+msgstr "Перейти на следующий день"
+
+msgctxt "#30009"
+msgid "Jump to specific time from beginning"
+msgstr "Пропустить определенное время от начала передачи"
+
+msgctxt "#30010"
+msgid "Allow skipping beginning of archived program"
+msgstr "Пропускать начало передачи из архива"
+
+msgctxt "#30011"
+msgid "EPG and Archive"
+msgstr "Программа передач / Архив"
+
+msgctxt "#30012"
+msgid "TV"
+msgstr "ТВ"
+
+msgctxt "#30013"
+msgid "Now"
+msgstr "Прямо сейчас"
+
+msgctxt "#30014"
+msgid "Watch next on %s"
+msgstr "Далее в %s"
+
+msgctxt "#30015"
+msgid "Show protected channels"
+msgstr "Показывать закрытые каналы"
+
+msgctxt "#30016"
+msgid "Video collection"
+msgstr "Видеотека"
+
+msgctxt "#30017"
+msgid "Watch video"
+msgstr "Смотреть"
+
+msgctxt "#30018"
+msgid "Next page"
+msgstr "Следующая страница"
+
+msgctxt "#30019"
+msgid "Previous page"
+msgstr "Предыдущая страница"
+
+msgctxt "#30020"
+msgid "Goto channels list on start"
+msgstr "Сразу открывать список каналов"
+
+msgctxt "#30021"
+msgid "Refresh"
+msgstr "Обновить список"
+
+msgctxt "#30022"
+msgid "Show current programm hint"
+msgstr "Подсказка текущей программы"
+
+msgctxt "#30023"
+msgid "Cannot to sign in"
+msgstr "Ошибка авторизации"
+
+msgctxt "#30024"
+msgid "Please check your username and password"
+msgstr "Пожалуйста проверьте правильность имени пользователя и пароля."
+
+msgctxt "#30025"
+msgid "Error receiving translation URL"
+msgstr "Ошибка получения URL трансляции"
+
+msgctxt "#30026"
+msgid "Parental code"
+msgstr "Родительский код"
+
+msgctxt "#30027"
+msgid "Channels list auto-refresh rate"
+msgstr "Период автообновления списка каналов"
+
+msgctxt "#30028"
+msgid "Force channels list to be refreshed"
+msgstr "Форсированное обновление списка каналов"
+
+msgctxt "#30029"
+msgid "tream type Standard or HLS"
+msgstr "Тип видео стандарт или HLS"
+
+msgctxt "#30030"
+msgid "Stream server"
+msgstr "Стрим сервер"
+
+msgctxt "#30031"
+msgid "Add only one item to XBMC playlist"
+msgstr "Добавлять только один видео фаил в лист"
+
+msgctxt "#30032"
+msgid "Small step forward (right key) in min"
+msgstr "Малая перемотка вперед (right key) в мин"
+
+msgctxt "#30033"
+msgid "Small step backward (left key) in min"
+msgstr "Малая перемотка назад (left key) в мин"
+
+msgctxt "#30034"
+msgid "Big step forward (up key) in min"
+msgstr "Большая перемотка вперед (up key) в мин"
+
+msgctxt "#30035"
+msgid "Big step backward (down key) in min"
+msgstr "Большая перемотка назад (down key) в мин"
+
+msgctxt "#30036"
+msgid "Display"
+msgstr "Показывать"
+
+msgctxt "#30037"
+msgid "Add to favourites"
+msgstr "Добавить в избранные"
+
+msgctxt "#30038"
+msgid "Remove from favourites"
+msgstr "Удалить из избранных"
+
+msgctxt "#30039"
+msgid "Reset favourites"
+msgstr "Очистить избранное"
+
+msgctxt "#30040"
+msgid "programm times before channel name"
+msgstr "время передачи перед названием канала"
+
+msgctxt "#30041"
+msgid "Favourites only"
+msgstr "Избранные каналы"
+
+msgctxt "#30042"
+msgid "All TV channels"
+msgstr "Все ТВ каналы"
+
+msgctxt "#30043"
+msgid "Auto detect current timezone"
+msgstr "Определять временную зону автоматически"
+
+msgctxt "#30044"
+msgid "Use EPG in channels list"
+msgstr "Использовать программу передач"
+
+msgctxt "#30045"
+msgid "Use channels mapping file"
+msgstr "Использовать файл пересортировки каналов"
+
+msgctxt "#30046"
+msgid "Add ordinal number to channel name"
+msgstr "Добавлять порядковый номер к имени канала"
+
+msgctxt "#31001"
+msgid "General settings"
+msgstr "Общие настройки"
+
+msgctxt "#31002"
+msgid "Channels list"
+msgstr "Список каналов"
+
+msgctxt "#31003"
+msgid "Player"
+msgstr "Проигрыватель"
+
+msgctxt "#34001"
+msgid "Streaming server"
+msgstr "Сервер вещания"
+
+msgctxt "#34002"
+msgid "Timeshift"
+msgstr "Задержка вещания"
+
+msgctxt "#34003"
+msgid "Timezone"
+msgstr "Временная зона"
+
+msgctxt "#34004"
+msgid "Bitrate"
+msgstr "Bitrate потока"
+
+
+
