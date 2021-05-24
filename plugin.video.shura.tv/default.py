@@ -264,8 +264,8 @@ def Archive(plugin, feed, host, ArchiveOnly):
                                             '', timerange + '-'+CurrentEPG, '')
 
             item.setLabel(label)
-            item.setIconImage(os.path.join(addon.getAddonInfo(
-                'path'), 'resources', 'icons', 'play-stop.png'))
+            iconImage = os.path.join(addon.getAddonInfo('path'), 'resources', 'icons', 'play.png')
+            item.setArt({'icon': iconImage})
             item.setInfo(type='video', infoLabels={'title': CurrentEPG, 'plotoutline': '', 'plot': Description, 'genre': '',
                          'duration': weekepg[i]['duration'],  'StartTime': weekepg[i]['start_time'], 'EndTime': weekepg[i]['start_time'] + weekepg[i]['duration']})
 
