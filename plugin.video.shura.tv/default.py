@@ -644,7 +644,7 @@ def ShowChannelsList(plugin, mode='TV'):
             for channel in channels:
                 found = 0
                 ch_id = channel['id']
-                file = open(CHANNELMAPPING, 'r')
+                file = open(CHANNELMAPPING, 'r', encoding='utf-8')
                 while 1:
                     line = file.readline()
                     if not line:

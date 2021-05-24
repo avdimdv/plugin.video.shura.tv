@@ -186,7 +186,7 @@ class shura:
 
     def getChannelsList(self):
 
-        #web_pdb.set_trace();
+        #web_pdb.set_trace()
 
         url = 'http://pl.tvshka.net/?uid='+self.OTT + \
             '&srv='+str(self.ServerName)+'&type=xml'
@@ -220,9 +220,11 @@ class shura:
                 else:
                     #xbmc.log('url type=Standard')
                     url = feed.getElementsByTagName('url')[0].firstChild.data
-                # Try get id from url. It is in format http://s1.tvshka.net/~shXXXXXXXX/701/ i.e. ends with number
-                path = urllib.parse.urlparse(url).path  # '/~shXXXXXXXX/701/'
-                path = os.path.split(path)[0]		# '/~shXXXXXXXX/701'
+                # Try get id from url. It is in format http://s1.tvshka.net/~shXXXXXXXX/701/ i.e. ends with number (or http://s1.tvshka.net/~shXXXXXXXX/701/hls/ in case of HLS)
+                path = urllib.parse.urlparse(url).path  # '/~shXXXXXXXX/701/' or '/~shXXXXXXXX/701/hls/'
+                path = os.path.split(path)[0]		# '/~shXXXXXXXX/701' or '/~shXXXXXXXX/701/hls'
+                if self.StreamType == '1':
+                    path = os.path.split(path)[0]   # remove hls
                 id = os.path.split(path)[1]			# 701
                 archive = feed.getElementsByTagName(
                     'archive')[0].firstChild.data

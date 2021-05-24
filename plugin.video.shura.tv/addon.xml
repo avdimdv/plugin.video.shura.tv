@@ -17,5 +17,8 @@
     <license>GPL 2.0</license>
     <summary>Онлайн-телевидение SHURA.TV</summary>
     <description>Онлайн-телевидение SHURA.TV: 100 русскоязычных каналов от 0 евро в месяц. EPG + Aрхив</description>
+    <assets>
+        <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
