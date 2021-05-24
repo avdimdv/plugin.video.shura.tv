@@ -354,10 +354,11 @@ def OpenPage(plugin, num):
                             epg[0]['start_time'] + epg[0]['duration']).strftime('%H:%M')
                     timerange = '%s - %s ' % (epg_start, epg_end)
 
+                label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name'] + ':', timerange + '-'+CurrentEPG, '')
             except Exception as e:
                 xbmc.log('[SHURA.TV] exception i prepare EPG' + str(e))
-        label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name'] +
-                                        ':', timerange + '-'+CurrentEPG, '')
+        else:
+            label = '%s[B] %s[/B] %s' % ('', Lgl[i]['name'] , '')
         if epg != None:
             item.setInfo(type='video', infoLabels={
                          'title': epg[0]['name']})
@@ -406,10 +407,11 @@ def OpenPage(plugin, num):
                                 epg[0]['start_time'] + epg[0]['duration']).strftime('%H:%M')
                         timerange = '%s - %s ' % (epg_start, epg_end)
 
+                    label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name'] + ':', timerange + '-'+CurrentEPG, '')
                 except Exception as e:
                     xbmc.log('[SHURA.TV] exception i prepare EPG' + str(e))
-                label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name'] +
-                                                ':', timerange + '-'+CurrentEPG, '')
+            else:
+                label = '%s[B] %s[/B] %s' % ('', Lgl[i]['name'] , '')
             if epg != None:
                 item.setInfo(type='video', infoLabels={
                              'title': epg[0]['name']})
@@ -458,10 +460,11 @@ def OpenPage(plugin, num):
                                 epg[0]['start_time'] + epg[0]['duration']).strftime('%H:%M')
                         timerange = '%s - %s ' % (epg_start, epg_end)
 
+                    label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name'] + ':', timerange + '-'+CurrentEPG, '')
                 except Exception as e:
                     xbmc.log('[SHURA.TV] exception i prepare EPG' + str(e))
-                label = '%s[B] %s[/B] %s %s' % ('', Lgl[i]['name'] +
-                                                ':', timerange + '-'+CurrentEPG, '')
+            else:
+                label = '%s[B] %s[/B] %s' % ('', Lgl[i]['name'] , '')
             if epg != None:
                 item.setInfo(type='video', infoLabels={
                              'title': epg[0]['name']})
